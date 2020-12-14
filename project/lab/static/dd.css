@@ -1,0 +1,25 @@
+body{
+background: steelblue;
+}
+
+.mainc{
+border: 2px black solid;
+display: flex;
+flex-direction: row;
+padding:10px;
+height:150px;
+width: 95%;
+margin: 10px;
+background: white;
+justify-content:flex-start;
+}
+.img{
+margin-left:300px;
+}
+
+.heading{
+display: flex;
+flex-direction:column;
+
+
+}

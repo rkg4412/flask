@@ -1,0 +1,20 @@
+{%extends 'layout.html' %}
+
+{% block content %}
+<h1>{{title}}</h1>
+<ol>
+<li>Owner Name:{{user.Username}}</li>
+<li>Address:{{user.Address}} </li>
+<li>Email:{{user.Email}} </li>
+<li>Phone Number:{{user.phone}} </li>
+</ol>
+<img src="{{front}}" height="200px" width="200px">
+<img src="{{back}}" height="200px" width="200px">
+<img src="{{right}}" height="200px" width="200px">
+<img src="{{left}}" height="200px" width="200px">
+<iframe src="{{fin}}" height="200px" width="200px">FINANCE</iframe>
+<iframe src="{{mil}}" height="200px" width="200px">FINANCE</iframe>
+<iframe src="{{vin}}" height="200px" width="200px">FINANCE</iframe>
+
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>{{title}}</h1>
+	<form method="post" action="">
+		{{form.hidden_tag()}}
+		<legend>Enter here</legend>
+			   <div>
+			{{form.Email.label(class='form-label')}}
+			{% if form.Email.errors %}
+				{{form.Email(class='form-field-incorect')}}
+				{% for error in form.Email.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.Email(class='form-field')}}
+			
+ 			{% endif %}
+			
+			</div>
+			<div>
+			{{form.Password.label(class='form-label')}}
+			{% if form.Password.errors %}
+				{{form.Password(class='form-field-incorect')}}
+				{% for error in form.Password.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.Password(class='form-field')}}
+			
+ 			{% endif %}
+			</div>
+			<div>
+
+			{{form.Submit(class='form-field')}}
+			</div>
+	</form>
+	Don't have a account <a href="#">Sign up</a>
+
+{% endblock %}

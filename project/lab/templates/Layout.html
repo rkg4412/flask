@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='dd.css')}}">
+	<title>Lab project</title>
+</head>
+<body>
+	{% with messages=get_flashed_messages() %}
+	{% if messages%}
+	{% for m in messages %}
+	{{m}}
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
+{% block content %}
+{% endblock %}
+</body>
+</html>

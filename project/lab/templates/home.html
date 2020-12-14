@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>VEHICLES</h1>
+<div class="mainc">
+{% for v in vec   %}
+<div class="heading">
+<h3><a href="{{url_for('vec',vec_id=v.vec_id)}}">{{v.Model}}</a></h3>
+<p>{{v.Company}}<br>
+{{v.Colour}}<br>
+SOLD BY: {{user.Username}}
+</p>
+</div>
+<div class="img">
+<img src="{{front}}" height="100px" width="200px"  border="2px black solid" >
+</div>
+{% endfor %}
+</div>
+{% endblock %}
