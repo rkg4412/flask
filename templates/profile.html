@@ -1,0 +1,41 @@
+
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>{{title}}</h1>
+<ol>
+<li>Owner Name:{{user.Username}}</li>
+<li>Address:{{user.Address}} </li>
+<li>Email:{{user.Email}} </li>
+<li>Phone Number:{{user.phone}} </li>
+</ol>
+<h2>Vehicles Selled till now</h2>
+{% if vs==None  %}
+<span>None Vehicles has been selled</span>
+{% else %}
+{% for v in  vs %}
+{% if v.count==1 and v.buyer_id!=None  %}
+<ol>	
+<li>COMPANY:{{v.Company}}</li>
+<li>COLOUR:{{v.Colour}}</li>
+<li>MODEL:{{v.Model}}</li>
+</ol>
+{% endif %}
+{% endfor  %}
+{% endif%}
+<h2>Vehicle Buyed till now</h2>
+{% if vb==None %}
+<span>None Vehicles has been Buyed</span>
+{% else %}
+{% for v in  vb %}
+{% if v.count==1 %}
+<ol>	
+<li>COMPANY:{{v.Company}}</li>
+<li>COLOUR:{{v.Colour}}</li>
+<li>MODEL:{{v.Model}}</li>
+</ol>
+{% endif %}
+{% endfor  %}
+{% endif %}
+<a href="{{url_for('profile_update')}}"> for updating your profile</a>
+{% endblock %}

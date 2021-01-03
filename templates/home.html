@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="h1">
+<h1 >VEHICLES</h1>
+</div>
+{% for v in vec   %}
+{% if v.count == 0 %}
+<div class="mainc">
+<div class="dir">
+<div class="heading">
+<h3><a href="{{url_for('vec',vec_id=v.vec_id)}}">{{v.Model}}</a></h3>
+<p>{{v.Company}}<br>
+{{v.Colour}}<br>
+SOLD BY: {{v.seller.s_user.Username}}
+</p>
+</div>
+<div class="img">
+<img src="{{url_for('static',filename='pic/'+v.Image_Front) }}" height="150px" width="300px"  border="2px black solid" >
+</div>
+</div>
+</div>
+{% endif %}
+{% endfor %}
+{% endblock %}

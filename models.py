@@ -1,14 +1,14 @@
-from lab import db,login
+from lab import db,login,app
 from flask_login import UserMixin
 from sqlalchemy.orm import backref
 from datetime import datetime
+from sqlalchemy import create_engine
 
+engine = create_engine('mysql://root:roottiger@localhost/flaskdb')
 
 @login.user_loader
 def load_user(user_id):
 	return User.query.get(int(user_id))
-
-
 
 class User(db.Model,UserMixin):
 	id=db.Column(db.Integer,primary_key=True)
@@ -64,13 +64,24 @@ class Vehicle(db.Model):
 class Check(db.Model):
 	ckeck_id=db.Column(db.Integer,primary_key=True)
 	cvec_id=db.Column(db.Integer,db.ForeignKey('vehicle.vec_id'),nullable=False)
-	mil=db.Column(db.String(120),default='default.jpg',nullable=False)
-	vin=db.Column(db.String(120),default='default.jpg',nullable=False)
-	fin=db.Column(db.String(120),default='default.jpg',nullable=False)
+	mil=db.Column(db.String(120),default='default.pdf',nullable=False)
+	vin=db.Column(db.String(120),default='default.pdf',nullable=False)
+	fin=db.Column(db.String(120),default='default.pdf',nullable=False)
 	vec_rel=db.relationship('Vehicle',backref=backref("vec_rel", uselist=False),lazy=True )
 
 	def __repr__(self):
 		return(f'{self.ckeck_id},{self.cvec_id}')
 
 
+
+class activity(db.Model):
+	act_id=db.Column(db.Integer,primary_key=True)
+	at=db.Column(db.String(150),nullable=False)
+	action=db.Column(db.String(50),nullable=False)
+	time=db.Column(db.DateTime,default=datetime.now,nullable=False)
 	
+
+
+
+
+

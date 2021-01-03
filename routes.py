@@ -1,5 +1,5 @@
 from flask import Flask,render_template,url_for,redirect,flash,request,abort
-from lab.forms import RegisterForm,LoginForm,SellForm,UpdateForm
+from lab.forms import RegisterForm,LoginForm,SellForm,UpdateForm,updateUserForm
 from lab import app, bcrpyt,db,login
 from lab.models import User,Buyers,Sellers,Vehicle,Check
 from flask_login import login_user,current_user,login_required,logout_user
@@ -8,16 +8,12 @@ import os
 
 
 
-
-
-
 @app.route('/')
 @app.route('/home')
 def home():
 	vec=Vehicle.query.all()
-	# sel=Sellers.query.get(v.seller_id)
-	# user=User.query.filter_by(id=sel.User_i).first()
 	return render_template('home.html',vec=vec,sep=os.sep)
+
 
 @app.route('/register', methods=["POST","GET"])
 def register_from():
@@ -32,7 +28,7 @@ def register_from():
 		user=User(Username=form.Username.data,Email=form.Email.data,Password=h_password,Address=form.Address.data,phone=form.Phno.data)
 		db.session.add(user)
 		db.session.commit()
-		flash("Your account is been created ")
+		flash("Your account is been created ","success")
 		return redirect(url_for('home'))
 	print(form.errors)	
 	return render_template('register.html',title="Register Form",form=form)
@@ -147,7 +143,7 @@ def Sellform():
 		c1=Check(mil=M,vin=V,fin=Fi,cvec_id=xi)
 		db.session.add(c1)
 		db.session.commit()
-		flash("Your Vehicle has been recorded")
+		flash("Your Vehicle has been recorded","success")
 		return redirect(url_for('home'))
 	elif request.method=="GET":
 		form.Username.data=current_user.Username
@@ -168,6 +164,7 @@ def logout():
 @login_required
 def vec(vec_id):
 	vec=Vehicle.query.get(vec_id)
+	
 	m=os.sep
 	FI=url_for('static',filename=f'pic/{vec.Image_Front}')
 	BI=url_for('static',filename=f'pic/{vec.Image_Back}')
@@ -179,7 +176,8 @@ def vec(vec_id):
 	Fin=url_for('static',filename=f'pic/{ch.fin}')
 	vin=url_for('static',filename=f'pic/{ch.vin}')
 	mil=url_for('static',filename=f'pic/{ch.mil}')
-	return render_template('vecdetails.html',vec=vec,title="Details" ,front=FI,back=BI,left=LI,right=RI,user=user,fin=Fin,vin=vin,mil=mil,seller=sel)
+	buy=Buyers.query.get(vec.buyer_id)
+	return render_template('vecdetails.html',vec=vec,title="Details" ,front=FI,back=BI,left=LI,right=RI,user=user,fin=Fin,vin=vin,mil=mil,seller=sel,buy=buy)
 
 
 @app.route('/vel/<int:vec_id>/update', methods=["POST","GET"])
@@ -188,7 +186,7 @@ def vec_update(vec_id):
 	form=UpdateForm()
 	vec=Vehicle.query.get_or_404(vec_id)
 	ch=Check.query.filter_by(cvec_id=vec_id).first()
-	if current_user.id!=vec.seller_id:
+	if current_user.s_user.sel_id!=vec.seller_id:
 		abort(403)
 	if form.validate_on_submit():
 		if form.FrontImg.data:
@@ -235,8 +233,9 @@ def vec_update(vec_id):
 @login_required
 def vec_book(vec_id):
 	vec=Vehicle.query.get_or_404(vec_id)
-	if current_user.id==vec.seller_id:
-		abort(403)
+	if current_user.s_user != None:
+		if current_user.s_user.sel_id==vec.seller_id:
+			abort(403)
 	vec=Vehicle.query.get_or_404(vec_id)
 	b1=Buyers.query.filter_by(User_i=current_user.id).first()
 	if b1==None:
@@ -245,8 +244,78 @@ def vec_book(vec_id):
 		db.session.commit()
 		vec.buyer_id=buy.buy_id
 		db.session.commit()
-	vec.buyer_id=b1.buy_id
-	db.session.commit()
+	else:
+		vec.buyer_id=b1.buy_id
+		db.session.commit()
 	flash('Your booking Message is delivered to the seller')
 	return redirect(url_for('home'))
+
+
+@app.route('/vel/<int:vec_id>/Register', methods=["POST","GET"])
+@login_required
+def vec_Register(vec_id):
+	vec=Vehicle.query.get_or_404(vec_id)
+	if current_user.s_user.sel_id!=vec.seller_id:
+		abort(403)
+	if vec.count==1 and vec.buyer_id==None:
+		abort(403)
+	vec.count=1
+	db.session.commit();
+	flash('Your Vehicle has been Register')
+	return redirect(url_for('home'))
+
+
+
+@app.route('/vel/<int:vec_id>/Withdraw', methods=["POST","GET"])
+@login_required
+def vec_Withdraw(vec_id):
+	vec=Vehicle.query.get_or_404(vec_id)
+	if current_user.s_user.sel_id!=vec.seller_id:
+		abort(403)
+	if vec.count==1:
+		abort(403)
+	vec.count=1
+	vec.buyer_id=None
+	db.session.commit();
+	flash('Your Vehicle has been Withdraw')
+	return redirect(url_for('home'))
+
+
+@app.route('/profile', methods=["POST","GET"])
+@login_required
+def profile():
+	user=User.query.get_or_404(current_user.id)
+	if current_user.s_user==None:
+		vec_sel=None
+	else:
+		vec_sel=Vehicle.query.filter_by(seller_id=current_user.s_user.sel_id)
+	
+	if current_user.b_user==None:
+		vec_buy=None
+	else:
+		vec_buy=Vehicle.query.filter_by(buyer_id=current_user.b_user.buy_id)
+	return render_template('profile.html',user=user,vs=vec_sel,vb=vec_buy,title='Account Details')
+
+
+@app.route('/profile/update', methods=["POST","GET"])
+@login_required
+def profile_update():
+	form=updateUserForm()
+	user=User.query.get_or_404(current_user.id)
+	if form.validate_on_submit():
+		current_user.Username=form.Username.data
+		current_user.Email=form.Email.data
+		current_user.Address=form.Address.data
+		current_user.phone=form.Phno.data
+		flash("your profile details are Updated")
+		return redirect(url_for("home"))
+	elif request.method=='GET':
+		form.Username.data=current_user.Username
+		form.Email.data=current_user.Email
+		form.Address.data=current_user.Address
+		form.Phno.data=current_user.phone
+	return render_template("update_user.html",form=form)
+
+
+
 

@@ -1,0 +1,222 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>{{title}}</h1>
+<form method="post" action="" enctype="multipart/form-data">
+		{{form.hidden_tag()}}
+			<legend>JOIN TODAY</legend>
+			   <div>
+			{{form.Username.label(class='form-label')}}
+			{% if form.Username.errors %}
+				{{form.Username(class='form-field-incorect')}}
+				{% for error in form.Username.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.Username(class='form-field')}}
+			
+ 			{% endif %}
+			
+			</div>
+			   <div>
+			{{form.Email.label(class='form-label')}}
+			{% if form.Email.errors %}
+				{{form.Email(class='form-field-incorect')}}
+				{% for error in form.Email.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.Email(class='form-field')}}
+			
+ 			{% endif %}
+			</div>
+			<div>
+			{{form.Address.label(class='form-label')}}
+			{% if form.Address.errors %}
+				{{form.Address(class='form-field-incorect')}}
+				{% for error in form.Address.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.Address(class='form-field')}}
+			
+ 			{% endif %}
+			</div>
+			<div>
+			{{form.Phno.label(class='form-label')}}
+			{% if form.Phno.errors %}
+				{{form.Phno(class='form-field-incorect')}}
+				{% for error in form.Phno.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.Phno(class='form-field')}}
+			
+ 			{% endif %}
+			</div>
+			
+			<div>
+			{{form.FrontImg.label(class='form-label')}}
+			{% if form.FrontImg.errors %}
+				{{form.FrontImg(class='form-label')}}
+				{% for error in form.FrontImg.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.FrontImg(class='form-field')}}
+			
+ 			{% endif %}
+			
+			</div>
+			<div>
+			{{form.BackImg.label(class='form-label')}}
+			{% if form.BackImg.errors %}
+				{{form.BackImg(class='form-label')}}
+				{% for error in form.BackImg.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.BackImg(class='form-field')}}
+			
+ 			{% endif %}
+			
+			</div>
+			<div>
+			{{form.RSImg.label(class='form-label')}}
+			{% if form.RSImg.errors %}
+				{{form.RSImg(class='form-label')}}
+				{% for error in form.RSImg.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.RSImg(class='form-field')}}
+			
+ 			{% endif %}
+			
+			</div>
+			<div>
+			{{form.LSImg.label(class='form-label')}}
+			{% if form.LSImg.errors %}
+				{{form.LSImg(class='form-label')}}
+				{% for error in form.LSImg.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.LSImg(class='form-field')}}
+			
+ 			{% endif %}
+			
+			</div>
+			<div>
+			{{form.Milage.label(class='form-label')}}
+			{% if form.Milage.errors %}
+				{{form.Milage(class='form-label')}}
+				{% for error in form.Milage.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.Milage(class='form-field')}}
+			
+ 			{% endif %}
+			
+			</div>
+			<div>
+			{{form.VIN.label(class='form-label')}}
+			{% if form.VIN.errors %}
+				{{form.VIN(class='form-label')}}
+				{% for error in form.VIN.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.VIN(class='form-field')}}
+			
+ 			{% endif %}
+			
+			</div>
+			<div>
+			{{form.Finance.label(class='form-label')}}
+			{% if form.Finance.errors %}
+				{{form.Finance(class='form-label')}}
+				{% for error in form.Finance.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.Finance(class='form-field')}}
+			
+ 			{% endif %}
+			
+			</div>
+			<div>
+			{{form.Company.label(class='form-label')}}
+			{% if form.Company.errors %}
+				{{form.Company(class='form-label')}}
+				{% for error in form.Company.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.Company(class='form-field')}}
+			
+ 			{% endif %}
+			
+			</div>
+			<div>
+			{{form.Model.label(class='form-label')}}
+			{% if form.Model.errors %}
+				{{form.Model(class='form-label')}}
+				{% for error in form.Model.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.Model(class='form-field')}}
+			
+ 			{% endif %}
+			
+			</div>
+			<div>
+			{{form.Colour.label(class='form-label')}}
+			{% if form.Colour.errors %}
+				{{form.Colour(class='form-label')}}
+				{% for error in form.Colour.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.Colour(class='form-field')}}
+			
+ 			{% endif %}
+			
+			</div>
+			<div>
+
+			{{form.Submit(class='form-field')}}
+			</div>
+
+</form>
+{% endblock %}

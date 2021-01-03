@@ -1,0 +1,102 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>{{title}}</h1>
+
+	<form method="post" action="">
+		{{form.hidden_tag()}}
+			<legend>JOIN TODAY</legend>
+			   <div>
+			{{form.Username.label(class='form-label')}}
+			{% if form.Username.errors %}
+				{{form.Username(class='form-field-incorect')}}
+				{% for error in form.Username.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.Username(class='form-field')}}
+			
+ 			{% endif %}
+			
+			</div>
+			   <div>
+			{{form.Email.label(class='form-label')}}
+			{% if form.Email.errors %}
+				{{form.Email(class='form-field-incorect')}}
+				{% for error in form.Email.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.Email(class='form-field')}}
+			
+ 			{% endif %}
+			</div>
+			 <div>
+			{{form.Password.label(class='form-label')}}
+			{% if form.Password.errors %}
+				{{form.Password(class='form-field-incorect')}}
+				{% for error in form.Password.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.Password(class='form-field')}}
+			
+ 			{% endif %}
+			</div>
+			 <div>
+			{{form.ConformPassword.label(class='form-label')}}
+			{% if form.ConformPassword.errors %}
+				{{form.ConformPassword(class='form-field-incorect')}}
+				{% for error in form.ConformPassword.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.ConformPassword(class='form-field')}}
+			
+ 			{% endif %}
+			</div>
+			<div>
+			{{form.Address.label(class='form-label')}}
+			{% if form.Address.errors %}
+				{{form.Address(class='form-field-incorect')}}
+				{% for error in form.Address.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.Address(class='form-field')}}
+			
+ 			{% endif %}
+			</div>
+			<div>
+			{{form.Phno.label(class='form-label')}}
+			{% if form.Phno.errors %}
+				{{form.Phno(class='form-field-incorect')}}
+				{% for error in form.Phno.errors %}
+				<div class="feedback">
+				<span>{{error}}</span>
+				</div>
+				{% endfor %}
+			{% else %}
+				{{form.Phno(class='form-field')}}
+			
+ 			{% endif %}
+			</div>
+			<div>
+
+			{{form.Submit(class='form-field')}}
+			</div>
+
+	</form>
+	Already have a account <a href="{{url_for('login_form')}}">Login</a>
+
+{% endblock %}

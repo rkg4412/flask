@@ -1,0 +1,37 @@
+{%extends 'layout.html' %}
+
+{% block content %}
+<h1>{{title}}</h1>
+<ol>
+<li>Owner Name:{{user.Username}}</li>
+<li>Address:{{user.Address}} </li>
+<li>Email:{{user.Email}} </li>
+<li>Phone Number:{{user.phone}} </li>
+</ol>
+<img src="{{front}}" height="200px" width="200px">
+<img src="{{back}}" height="200px" width="200px">
+<img src="{{right}}" height="200px" width="200px">
+<img src="{{left}}" height="200px" width="200px">
+<iframe src="{{fin}}" height="200px" width="200px">FINANCE</iframe>
+<iframe src="{{mil}}" height="200px" width="200px">MILAGE</iframe>
+<iframe src="{{vin}}" height="200px" width="200px">VIN</iframe>
+
+{% if current_user.id==seller.User_i  %}
+<button><a href="{{url_for('vec_update',vec_id=vec.vec_id)}}">Update</a></button>
+<button><a href="{{url_for('vec_Withdraw',vec_id=vec.vec_id)}}">Withdraw</a></button>
+	{% if vec.buyer_id != None %}
+	<div>
+	<ul>
+	<li>buyer's Name:{{buy.b_user.Username}}</li>
+	<li>buyer's Email:{{buy.b_user.Email}}</li>
+	<li>buyer's Address:{{buy.b_user.Address}}</li>
+	<li>buyer's Phno:{{buy.b_user.phone}}</li>
+	</ul>	
+	</div>
+	<button><a href="{{url_for('vec_Register',vec_id=vec.vec_id)}}">Register</a></button>
+	{% endif %}
+{% else %}
+<button><a href="{{url_for('vec_book',vec_id=vec.vec_id)}}">Book </a></button>
+{% endif%}
+
+{% endblock %}
